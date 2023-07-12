@@ -7,7 +7,7 @@
 namespace AgendaApiLucianoSvaikaukas.Migrations
 {
     /// <inheritdoc />
-    public partial class porfavordiosfunciona : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,7 +32,6 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    UserName = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: true),
                     Password = table.Column<string>(type: "TEXT", nullable: false)
@@ -91,11 +90,11 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Email", "LastName", "Name", "Password", "UserName" },
+                columns: new[] { "Id", "Email", "LastName", "Name", "Password" },
                 values: new object[,]
                 {
-                    { 1, "karenbailapiola@gmail.com", "Lasot", "Karen", "Pa$$w0rd", "karenpiola" },
-                    { 2, "elluismidetotoras@gmail.com", "Gonzales", "Luis Gonzalez", "lamismadesiempre", "luismitoto" }
+                    { 1, "karenbailapiola@gmail.com", "Lasot", "Karen", "Pa$$w0rd" },
+                    { 2, "elluismidetotoras@gmail.com", "Gonzales", "Luis Gonzalez", "lamismadesiempre" }
                 });
 
             migrationBuilder.InsertData(

@@ -40,7 +40,7 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
 
             //CLAIMS - data-valor ---- LA PARTE DEL PAYLOAD DEL JWT
             var claimsForToken = new List<Claim>();
-            claimsForToken.Add(new Claim("sub", user.Id.ToString()));
+            claimsForToken.Add(new Claim("sub", user.Id.ToString())); //esto lo usamos para el user en el get del contact controller
             claimsForToken.Add(new Claim("given_name", user.Name));
             claimsForToken.Add(new Claim("family_name", user.LastName));
             //ACÁ SE CREA EL TOKEN

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaApiLucianoSvaikaukas.Migrations
 {
     [DbContext(typeof(AgendaContext))]
-    [Migration("20230710053708_porfavordiosfunciona")]
-    partial class porfavordiosfunciona
+    [Migration("20230711185428_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,10 +115,6 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -130,8 +126,7 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
                             Email = "karenbailapiola@gmail.com",
                             LastName = "Lasot",
                             Name = "Karen",
-                            Password = "Pa$$w0rd",
-                            UserName = "karenpiola"
+                            Password = "Pa$$w0rd"
                         },
                         new
                         {
@@ -139,8 +134,7 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
                             Email = "elluismidetotoras@gmail.com",
                             LastName = "Gonzales",
                             Name = "Luis Gonzalez",
-                            Password = "lamismadesiempre",
-                            UserName = "luismitoto"
+                            Password = "lamismadesiempre"
                         });
                 });
 

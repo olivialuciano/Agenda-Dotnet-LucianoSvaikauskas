@@ -17,6 +17,10 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             _mapper = autoMapper;
         }
 
+        public List<Contact> GetAllByUser(int userId)
+        {
+            return _context.Contacts.Where(c => c.UserId == userId).ToList();
+        }
         public List<Contact> GetAll()
         {
             return _context.Contacts.ToList();
@@ -36,5 +40,14 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             _context.Contacts.Remove(_context.Contacts.Single(c => c.Id == id));
         }
 
+        public List<Contact> GetAllByUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        //public List<Contact> GetAllByUser()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

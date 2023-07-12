@@ -20,11 +20,14 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
         {
             _contactRepository = contactRepository;
         }
-
+        //met en el repository getall user
+        //mandarle que user
         [HttpGet]
         public IActionResult GetAll() //ActionResult -- tipo de devolución que usamos para los endpoints
         {
-            return Ok(_contactRepository.GetAll());
+            int? userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value); //es un enum que tiene todos los tipos de claim
+            //return Ok(_contactRepository.GetAll());
+            return Ok(_contactRepository.GetAllByUser());
         }
 
         [HttpGet]
@@ -32,6 +35,7 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
         public IActionResult GetOne(int Id)
         {
             return Ok(_contactRepository.GetAll().Where(x => x.Id == Id));
+            //return Ok(_contactRepository.GetAllByUser().Where(x => x.Id == Id));
         }
 
 

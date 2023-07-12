@@ -8,21 +8,19 @@ using AgendaApiLucianoSvaikaukas.Data.Repository.Implementations;
 using AgendaApiLucianoSvaikaukas.Data;
 using AgendaApiLucianoSvaikaukas.Profiles;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Add services to the container
 //paraque no tire el error
 builder.Services.AddControllers().AddNewtonsoftJson();
-
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setupAction =>
 {
-    setupAction.AddSecurityDefinition("AgendaApiBearerAuth", new OpenApiSecurityScheme() //Esto va a permitir usar swagger con el token.
+    //Esto va a permitir usar swagger con el token.
+    setupAction.AddSecurityDefinition("AgendaApiBearerAuth", new OpenApiSecurityScheme() 
     {
         Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
@@ -83,7 +81,7 @@ builder.Services.AddCors(options => options.AddPolicy(name: "agendaAngular",
                .AllowAnyHeader();
     }));
 
-
+//esto después del cors!
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

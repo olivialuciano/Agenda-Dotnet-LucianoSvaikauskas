@@ -22,7 +22,7 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
 
         public User? ValidateUser(AuthenticationRequestBody authRequestBody)
         {
-            return _context.Users.FirstOrDefault(p => p.UserName == authRequestBody.UserName && p.Password == authRequestBody.Password);
+            return _context.Users.FirstOrDefault(p => p.Email == authRequestBody.Email && p.Password == authRequestBody.Password);
         }
 
         public List<User> GetAll()

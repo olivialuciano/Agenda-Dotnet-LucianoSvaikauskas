@@ -29,7 +29,6 @@ namespace AgendaApiLucianoSvaikaukas.Data
                 LastName = "Lasot",
                 Password = "Pa$$w0rd",
                 Email = "karenbailapiola@gmail.com",
-                UserName = "karenpiola"
             };
             User lu = new User()
             {
@@ -38,7 +37,6 @@ namespace AgendaApiLucianoSvaikaukas.Data
                 LastName = "Gonzales",
                 Password = "lamismadesiempre",
                 Email = "elluismidetotoras@gmail.com",
-                UserName = "luismitoto"
             };
 
 
@@ -94,6 +92,8 @@ namespace AgendaApiLucianoSvaikaukas.Data
                 .HasData(ka, lu);
             modelBuilder.Entity<Contact>()
                 .HasData(contacts);
+
+            //PREGUNTARRRRRR!!!!!!!!!!
             //modelBuilder.Entity<Group>()
             //    .HasData(natacionG);
 
