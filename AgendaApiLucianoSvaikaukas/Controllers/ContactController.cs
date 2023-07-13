@@ -25,9 +25,9 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
         [HttpGet]
         public IActionResult GetAll() //ActionResult -- tipo de devolución que usamos para los endpoints
         {
-            int? userId = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value); //es un enum que tiene todos los tipos de claim
+            int userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value); //es un enum que tiene todos los tipos de claim
             //return Ok(_contactRepository.GetAll());
-            return Ok(_contactRepository.GetAllByUser());
+            return Ok(_contactRepository.GetAllByUser(userId));
         }
 
         [HttpGet]
@@ -44,7 +44,9 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
         {
             try
             {
-                _contactRepository.Create(createContactDto);
+                var userId =  Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+               
+                _contactRepository.Create(createContactDto, userId);
             }
             catch (Exception ex)
             {

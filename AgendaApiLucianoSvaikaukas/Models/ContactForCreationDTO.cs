@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AgendaApiLucianoSvaikaukas.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace AgendaApiLucianoSvaikaukas.Models
 {
@@ -8,9 +9,9 @@ namespace AgendaApiLucianoSvaikaukas.Models
         [Required]
         public string Name { get; set; }
         public long CelularNumber { get; set; }
-        public long TelephoneNumber { get; set; }
+        public long? TelephoneNumber { get; set; }
         public string Description { get; set; } = string.Empty;
- 
+        //public ICollection<Group>? Groups { get; set; }
     }
 
 }

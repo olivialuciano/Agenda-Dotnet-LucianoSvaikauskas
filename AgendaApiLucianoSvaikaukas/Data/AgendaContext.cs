@@ -86,6 +86,11 @@ namespace AgendaApiLucianoSvaikaukas.Data
             cg => cg.HasOne<Group>().WithMany().HasForeignKey("GroupId"),
             cg => cg.HasOne<Contact>().WithMany().HasForeignKey("ContactId")
         );
+        //.HasData(new[]
+        //                {
+        //                    new { StudentsId = 1, SubjectsAttendedId = 1},
+        //                    new { StudentsId = 1, SubjectsAttendedId = 2},
+        //                };
 
             //METEMOS LO HARCODEADO EN LA BBDD
             modelBuilder.Entity<User>()
@@ -93,7 +98,8 @@ namespace AgendaApiLucianoSvaikaukas.Data
             modelBuilder.Entity<Contact>()
                 .HasData(contacts);
 
-            //PREGUNTARRRRRR!!!!!!!!!!
+            //modelBuilder.
+
             //modelBuilder.Entity<Group>()
             //    .HasData(natacionG);
 

@@ -21,14 +21,23 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
         {
             return _context.Contacts.Where(c => c.UserId == userId).ToList();
         }
-        public List<Contact> GetAll()
-        {
-            return _context.Contacts.ToList();
-        }
+        //public List<Contact> GetAll()
+        //{
+        //    return _context.Contacts.ToList();
+        //}
 
-        public void Create(ContactForCreationDTO dto)
+        public void Create(ContactForCreationDTO dto, int userId)
         {
-            _context.Contacts.Add(_mapper.Map<Contact>(dto));
+            Contact contactoACargar = new Contact(){
+                UserId = userId,
+                CelularNumber = dto.CelularNumber,
+                Description = dto.Description,
+                Name = dto.Name,
+                TelephoneNumber = dto.TelephoneNumber,
+            };
+            _context.Contacts.Add(contactoACargar);
+            _context.SaveChanges();
+
         }
 
         public void Update(ContactForCreationDTO dto)
@@ -41,6 +50,11 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
         }
 
         public List<Contact> GetAllByUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Contact> GetAll()
         {
             throw new NotImplementedException();
         }
