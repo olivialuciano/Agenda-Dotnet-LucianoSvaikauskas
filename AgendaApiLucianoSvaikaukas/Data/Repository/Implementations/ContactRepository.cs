@@ -21,10 +21,10 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
         {
             return _context.Contacts.Where(c => c.UserId == userId).ToList();
         }
-        //public List<Contact> GetAll()
-        //{
-        //    return _context.Contacts.ToList();
-        //}
+        public List<Contact> GetAll(int userId)
+        {
+            return _context.Contacts.ToList();
+        }
 
         public void Create(ContactForCreationDTO dto, int userId)
         {
@@ -34,19 +34,34 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
                 Description = dto.Description,
                 Name = dto.Name,
                 TelephoneNumber = dto.TelephoneNumber,
+                //Groups = dto.Groups,
             };
             _context.Contacts.Add(contactoACargar);
             _context.SaveChanges();
 
         }
+        public void Update(ContactForCreationDTO dto, int userId, int contactId)
+        {
+            var contactoAModificar = _context.Contacts.FirstOrDefault(x => x.UserId == userId && x.Id == contactId);
 
-        public void Update(ContactForCreationDTO dto)
-        {
-            _context.Contacts.Update(_mapper.Map<Contact>(dto));
+            if (contactoAModificar != null)
+            {
+                contactoAModificar.UserId = userId;
+                contactoAModificar.Id = contactId;
+                contactoAModificar.CelularNumber = dto.CelularNumber;
+                contactoAModificar.Description = dto.Description;
+                contactoAModificar.Name = dto.Name;
+                contactoAModificar.TelephoneNumber = dto.TelephoneNumber;
+                //contactoAModificar.Groups = dto.Groups;
+
+                _context.SaveChanges();
+            }
         }
-        public void Delete(int id)
+
+        public void Delete(int id, int userId)
         {
-            _context.Contacts.Remove(_context.Contacts.Single(c => c.Id == id));
+            _context.Contacts.Remove(_context.Contacts.Single(c => c.Id == id && c.UserId == userId));
+            _context.SaveChanges();
         }
 
         public List<Contact> GetAllByUser()

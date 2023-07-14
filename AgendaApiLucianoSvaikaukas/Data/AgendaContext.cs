@@ -1,25 +1,16 @@
-﻿
-using AgendaApiLucianoSvaikaukas.Entities;
+﻿using AgendaApiLucianoSvaikaukas.Entities;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace AgendaApiLucianoSvaikaukas.Data
 {
-
     public class AgendaContext : DbContext //heredamos de dbcontext
-    {
-
-        //Esto genera las tablas users y contacts por ef.
+    {   //tablas (ef)
         public DbSet<User> Users { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-        public DbSet<Group> Groups { get; set; }  //agg tabla a bbdd group
-
-
-        public AgendaContext(DbContextOptions<AgendaContext> options) : base(options) //Heredamos del constructor de DbContext
-        {
-
-        }
-
+        public DbSet<Group> Groups { get; set; }
+        //Heredamos del constructor de DbContext
+        public AgendaContext(DbContextOptions<AgendaContext> options) : base(options) { }
+        //users, contacts y groups harcodeados
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             User ka = new User()
@@ -38,8 +29,6 @@ namespace AgendaApiLucianoSvaikaukas.Data
                 Password = "lamismadesiempre",
                 Email = "elluismidetotoras@gmail.com",
             };
-
-
             var contacts = new List<Contact>
             {
                 new Contact { Id=1,
@@ -61,80 +50,34 @@ namespace AgendaApiLucianoSvaikaukas.Data
                 TelephoneNumber = 7656,
                 UserId = lu.Id, }
             };
-
             Group natacionG = new Group()
             {
                 Id = 1,
                 Name = "Natacion",
-                Contacts = contacts
+                //Contacts = contacts
             };
-
-
-            base.OnModelCreating(modelBuilder);
 
             // Relación uno a muchos: Usuario - Contacto
             modelBuilder.Entity<User>()
-                .HasMany(u => u.Contacts)
-                .WithOne(c => c.User)
-                .HasForeignKey(c => c.UserId);
-
+                .HasMany(x => x.Contacts)
+                .WithOne(x => x.User);
+            // Creación de la tabla-relación ContactGroup
             modelBuilder.Entity<Contact>()
-        .HasMany(c => c.Groups)
-        .WithMany(g => g.Contacts)
-        .UsingEntity<Dictionary<string, object>>(
-            "ContactGroup",
-            cg => cg.HasOne<Group>().WithMany().HasForeignKey("GroupId"),
-            cg => cg.HasOne<Contact>().WithMany().HasForeignKey("ContactId")
-        );
-        //.HasData(new[]
-        //                {
-        //                    new { StudentsId = 1, SubjectsAttendedId = 1},
-        //                    new { StudentsId = 1, SubjectsAttendedId = 2},
-        //                };
+               .HasMany(x => x.Groups)
+               .WithMany(x => x.Contacts)
+               .UsingEntity(j => j
+                   .ToTable("ContactGroup")
+                   .HasData(new[]{ //metemos a la tabla relacion
+                            new { GroupsId = 1, ContactsId = 1},
+                            new { GroupsId= 1, ContactsId = 3},}));
 
-            //METEMOS LO HARCODEADO EN LA BBDD
-            modelBuilder.Entity<User>()
-                .HasData(ka, lu);
-            modelBuilder.Entity<Contact>()
-                .HasData(contacts);
+            //metemos lo harcodeado
+            modelBuilder.Entity<User>().HasData(ka, lu);
+            modelBuilder.Entity<Contact>().HasData(contacts);
+            modelBuilder.Entity<Group>().HasData(natacionG);
 
-            //modelBuilder.
+            base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<Group>()
-            //    .HasData(natacionG);
-
-
-
-            //// Relación muchos a muchos: Contacto - Grupo
-            //modelBuilder.Entity<ContactGroup>()
-            //    .HasKey(cg => new { cg.ContactId, cg.GroupId });
-
-            //modelBuilder.Entity<ContactGroup>()
-            //    .HasOne(cg => cg.Contact)
-            //    .WithMany()
-            //    .HasForeignKey(cg => cg.ContactId);
-
-            //modelBuilder.Entity<ContactGroup>()
-            //    .HasOne(cg => cg.Group)
-            //    .WithMany()
-            //    .HasForeignKey(cg => cg.GroupId);
-
-            // Remove any ambiguous entity type mapping for ContactoGrupo
-            //modelBuilder.Ignore<Dictionary<string, object>>("ContactoGrupo");
-            //    modelBuilder.Entity<User>()
-            //      .HasMany<Contact>(u => u.Contacts)
-            //      .WithOne(c => c.User);
-            //    ////////////////////////////
-
-
-            //    /////////para las relaciones de contact y group
-
-            //    modelBuilder.Entity<ContactGroup>()
-            //    .HasKey(cg => new { cg.ContactId, cg.GroupId });
-
-
-            //    base.OnModelCreating(modelBuilder);
-            //}
         }
     }
 }

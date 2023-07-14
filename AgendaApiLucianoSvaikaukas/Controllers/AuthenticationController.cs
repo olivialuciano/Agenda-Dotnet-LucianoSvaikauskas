@@ -1,6 +1,8 @@
 ﻿
 using AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces;
+using AgendaApiLucianoSvaikaukas.Entities;
 using AgendaApiLucianoSvaikaukas.Models;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,6 +17,7 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IUserRepository _userRepository;
+
 
         public AuthenticationController(IConfiguration config, IUserRepository userRepository)
         {
@@ -57,5 +60,6 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
 
             return Ok(tokenToReturn);
         }
+        
     }
 }

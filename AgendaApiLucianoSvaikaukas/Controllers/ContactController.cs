@@ -34,8 +34,10 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
         [Route("{Id}")]
         public IActionResult GetOne(int Id)
         {
-            return Ok(_contactRepository.GetAll().Where(x => x.Id == Id));
-            //return Ok(_contactRepository.GetAllByUser().Where(x => x.Id == Id));
+            var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var contacts = _contactRepository.GetAll(userId).Where(x => x.Id == Id && x.UserId == userId).ToList();
+            return Ok(contacts);
+
         }
 
 
@@ -56,11 +58,13 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
         }
 
         [HttpPut] //actualizar contacto
-        public IActionResult UpdateContact(ContactForCreationDTO dto)
+        public IActionResult UpdateContact(ContactForCreationDTO dto, int contactId)
         {
             try
             {
-                _contactRepository.Update(dto);
+                var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+                
+                _contactRepository.Update(dto, userId, contactId);
             }
             catch (Exception ex)
             {
@@ -74,7 +78,8 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
         {
             try
             {
-                _contactRepository.Delete(id);
+                var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+                _contactRepository.Delete(id, userId);
             }
             catch (Exception ex)
             {

@@ -32,8 +32,18 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
 
         public void Create(UserForCreationDTO dto)
         {
-            _context.Users.Add(_mapper.Map<User>(dto));
+            User usuarioACrear = new User()
+            {
+                Name = dto.Name,
+                Email = dto.Email,
+                LastName = dto.LastName,
+                Password = dto.Password,
+            };
+            _context.Users.Add(usuarioACrear);
+            _context.SaveChanges();
+
         }
+
 
         public void Update(UserForCreationDTO dto)
         {
@@ -43,6 +53,11 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
         public void Delete(int id)
         {
             _context.Users.Remove(_context.Users.Single(u => u.Id == id));
+        }
+
+        public void Create(UserForCreationDTO dto)
+        {
+            throw new NotImplementedException();
         }
     }
 }
