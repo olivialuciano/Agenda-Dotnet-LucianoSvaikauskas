@@ -2,7 +2,7 @@
 using AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces;
 using AgendaApiLucianoSvaikaukas.Entities;
 using AgendaApiLucianoSvaikaukas.Models;
-
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -17,14 +17,17 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
 
-        public AuthenticationController(IConfiguration config, IUserRepository userRepository)
+        public AuthenticationController(IConfiguration config, IUserRepository userRepository, IMapper mapper)
         {
             _config = config; //INYECCIÓN DE DEPENDENCIAS para poder usar el appsettings.json
             _userRepository = userRepository;
+            _mapper = mapper; 
 
         }
+        
 
         [HttpPost("authenticate")]
         public ActionResult<string> Autenticar(AuthenticationRequestBody authenticationRequestBody) //Enviamos como parámetro la clase que creamos arriba
@@ -60,6 +63,41 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
 
             return Ok(tokenToReturn);
         }
-        
+        [HttpPost]//("newuser")
+        public IActionResult PostUser(UserForCreationDTO dto)
+        {
+            try
+            {
+                //var user = _mapper.Map<User>(userDtoCreacion);
+                var user = new User()
+                {
+                    Name = dto.Name,
+                    LastName = dto.LastName,
+                    Password = dto.Password,
+                    Email = dto.Email,
+                };
+
+                var usersActivos = _userRepository.GetListUser();
+
+                foreach (var userActivo in usersActivos)
+                {
+                    if (user.Email == userActivo.Email)
+                    {
+                        return BadRequest("El email ingresado ya es utilizado en una cuenta activa");
+                    }
+                }
+
+                var userItem = _userRepository.AddUser(user);
+
+                var userItemDto = _mapper.Map<UserForCreationDTO>(userItem);
+
+                return Created("Created", userItemDto); ///*************
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

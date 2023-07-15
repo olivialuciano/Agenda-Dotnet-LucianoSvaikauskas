@@ -12,6 +12,11 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces
         public void Create(UserForCreationDTO dto);
         public void Update(UserForCreationDTO dto);
         public void Delete(int id);
+        User GetUser(int id);
+        public void UpdateUserData(User user);
+        List<User> GetListUser();
 
+        User AddUser(User user);
+        void DeleteUser(User user);
     }
 }
