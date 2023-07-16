@@ -6,6 +6,7 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces
 {
     public interface IContactRepository
     {
+        public Contact GetContactById(int contactId);
         public List<Contact> GetAll(int userId);
         public List<Contact> GetAllByUser(int userId);
         public void Create(ContactForCreationDTO dto, int userId);

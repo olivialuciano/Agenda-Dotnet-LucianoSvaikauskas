@@ -2,7 +2,7 @@
 using AgendaApiLucianoSvaikaukas.Entities;
 using AgendaApiLucianoSvaikaukas.Models;
 using AutoMapper;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
 {
@@ -16,6 +16,31 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             _context = context;
             _mapper = autoMapper;
         }
+
+
+
+        public Group GetGroupById(int groupId)
+        {
+            return _context.Groups.FirstOrDefault(g => g.Id == groupId);
+        }
+
+
+
+        public void CreateGroup(Group group)
+        {
+            _context.Groups.Add(group);
+            _context.SaveChanges();
+        }
+
+
+
+        public void Delete(int id, int userId)
+        {
+            _context.Groups.Remove(_context.Groups.Single(c => c.Id == id && c.UserId == userId));
+            _context.SaveChanges();
+        }
+
+
         public List<Group> GetAllByUser(int userId)
         {
             return _context.Groups.Where(g => g.UserId == userId).ToList();
@@ -26,46 +51,37 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             return _context.Groups.ToList();
         }
 
-        public void Create(GroupForCreationDTO dto, int userId)
+
+
+        //public void Update(GroupForCreationDTO dto, int userId, int groupId)
+        //{
+        //    var grupoAModificar = _context.Contacts.FirstOrDefault(x => x.UserId == userId && x.Id == groupId);
+
+        //    if (grupoAModificar != null)
+        //    {
+        //        grupoAModificar.UserId = userId;
+        //        grupoAModificar.Id = groupId;
+        //        grupoAModificar.Name = dto.Name;
+        //        //contactoAModificar.Contacts = dto.Contacts;
+
+        //        _context.SaveChanges();
+        //    }
+        //}
+
+        public void UpdateGroupName(int groupId, string newName)
         {
-            Group grupoACargar = new Group()
+            var group = _context.Groups.FirstOrDefault(g => g.Id == groupId);
+
+            if (group != null)
             {
-                UserId = userId,
-                Name = dto.Name,
-                //Contacts = dto.Contacts,
-            };
-            _context.Groups.Add(grupoACargar);
-            _context.SaveChanges();
-        }
-
-        public void Update(GroupForCreationDTO dto, int userId, int groupId)
-        {
-            var grupoAModificar = _context.Contacts.FirstOrDefault(x => x.UserId == userId && x.Id == groupId);
-
-            if (grupoAModificar != null)
-            {
-                grupoAModificar.UserId = userId;
-                grupoAModificar.Id = groupId;
-                grupoAModificar.Name = dto.Name;
-                //contactoAModificar.Contacts = dto.Contacts;
-
+                group.Name = newName;
                 _context.SaveChanges();
             }
         }
-        public void Delete(int id, int userId)
-        {
-            _context.Groups.Remove(_context.Groups.Single(c => c.Id == id && c.UserId == userId));
-            _context.SaveChanges();
-        }
 
-
-
-
-        /// /
         public List<Group> GetAll(int userId)
         {
             throw new NotImplementedException();
         }
-
     }
-} 
+}

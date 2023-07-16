@@ -1,7 +1,10 @@
-﻿using AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces;
+﻿using AgendaApiLucianoSvaikaukas.Data;
+using AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces;
+using AgendaApiLucianoSvaikaukas.Entities;
 using AgendaApiLucianoSvaikaukas.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgendaApiLucianoSvaikaukas.Controllers
 {
@@ -9,13 +12,86 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
     [ApiController]
     public class GroupController : ControllerBase
     {
+        
+
         //INYECCIÓN DE DEPENDENCIAS
         private readonly IGroupRepository _groupRepository;
+        private readonly IContactRepository _contactRepository;
+        private readonly AgendaContext _context;
 
-        public GroupController(IGroupRepository groupRepository)
+        public GroupController(AgendaContext context, IGroupRepository groupRepository, IContactRepository contactRepository)
         {
+            _context = context;
             _groupRepository = groupRepository;
+            _contactRepository = contactRepository;
         }
+
+
+
+
+        [HttpPost]
+        public IActionResult CreateGroup([FromBody] GroupForCreationDTO groupDTO)
+        {
+            if (groupDTO == null)
+            {
+                return BadRequest();
+            }
+            int userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+
+            // Mapear el objeto GroupDTO a un objeto Group
+            var group = new Group
+            {
+                Name = groupDTO.Name,
+                UserId = userId
+            };
+
+            // Llamar al método en el repositorio para crear el grupo
+            _groupRepository.CreateGroup(group);
+
+            // Devolver una respuesta exitosa
+            return Ok();
+        }
+
+
+        [HttpPost("{groupId}/assign-contact")]
+        public IActionResult AssignContactToGroup(int groupId, [FromBody] ContactForAssignGroupDTO contactDTO)
+        {
+            if (contactDTO == null)
+            {
+                return BadRequest();
+            }
+
+            // Obtener el grupo por su ID
+            var group = _groupRepository.GetGroupById(groupId);
+
+            if (group == null)
+            {
+                return NotFound();
+            }
+
+            // Obtener el contacto por su ID
+            var contact = _contactRepository.GetContactById(contactDTO.Id);
+
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            // Asignar el contacto al grupo
+            group.Contacts.Add(contact);
+            _context.SaveChanges();
+
+            // Devolver una respuesta exitosa
+            return Ok();
+        }
+
+
+
+
+
+
+
+
 
         [HttpGet]
         public IActionResult GetAll() //ActionResult -- tipo de devolución que usamos para los endpoints
@@ -33,37 +109,36 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
             return Ok(groups);
         }
 
-
-        [HttpPost] //nuevo grupo
-        public IActionResult CreateGroup(GroupForCreationDTO createGroupDto)
+        [HttpPut("{groupId}/update-name")]
+        public IActionResult UpdateGroupName(int groupId, [FromBody] string newName)
         {
-            try
+            if (string.IsNullOrEmpty(newName))
             {
-                var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
-                _groupRepository.Create(createGroupDto, userId);
+                return BadRequest();
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            return Created("Created", createGroupDto);
-        }
 
-        [HttpPut] //actualizar grupo
-        public IActionResult UpdateGroup(GroupForCreationDTO dto, int groupId)
-        {
-            try
-            {
-                var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            _groupRepository.UpdateGroupName(groupId, newName);
 
-                _groupRepository.Update(dto, userId, groupId);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
             return NoContent();
         }
+
+
+        //[HttpPut] //actualizar grupo
+        //public IActionResult UpdateGroup(GroupForCreationDTO dto, int groupId)
+        //{
+        //    try
+        //    {
+        //        var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+
+        //        _groupRepository.Update(dto, userId, groupId);
+        //        _context.SaveChanges();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex);
+        //    }
+        //    return NoContent();
+        //}
 
         [HttpDelete] //eliminar grupo
         public IActionResult DeleteGroupById(int id)
@@ -81,5 +156,5 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
             return Ok();
         }
     }
-}
+    }
 

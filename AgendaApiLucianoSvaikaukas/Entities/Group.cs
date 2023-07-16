@@ -5,6 +5,11 @@ namespace AgendaApiLucianoSvaikaukas.Entities
 {
     public class Group
     {
+        public Group()
+        {
+            Contacts = new List<Contact>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -15,3 +20,4 @@ namespace AgendaApiLucianoSvaikaukas.Entities
         public ICollection<Contact>? Contacts { get; set; }
     }
 }
+

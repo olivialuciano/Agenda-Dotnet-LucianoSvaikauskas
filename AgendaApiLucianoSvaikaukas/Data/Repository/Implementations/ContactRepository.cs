@@ -25,6 +25,10 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
         {
             return _context.Contacts.ToList();
         }
+        public Contact GetContactById(int contactId)
+        {
+            return _context.Contacts.FirstOrDefault(c => c.Id == contactId);
+        }
 
         public void Create(ContactForCreationDTO dto, int userId)
         {
