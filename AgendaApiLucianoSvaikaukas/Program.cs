@@ -70,7 +70,7 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
-builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+//builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 //#endregion
 
 //  CORS sino nunca iba a andar reina

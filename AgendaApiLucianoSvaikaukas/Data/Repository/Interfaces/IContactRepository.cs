@@ -9,7 +9,10 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces
         public List<Contact> GetAll(int userId);
         public List<Contact> GetAllByUser(int userId);
         public void Create(ContactForCreationDTO dto, int userId);
-        public void Update(ContactForCreationDTO dto, int userId, int contactId);
+        public void Update(ContactForCreationDTO dto, int userId, int id);
         public void Delete(int id, int userId);
+        //Contact GetContacto(int id);
+
+        //public void UpdateContact(Contact contacto);
     }
 }

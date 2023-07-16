@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaApiLucianoSvaikaukas.Migrations
 {
     [DbContext(typeof(AgendaContext))]
-    [Migration("20230711185428_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230716004302_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,9 +89,22 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Groups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Natacion",
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("AgendaApiLucianoSvaikaukas.Entities.User", b =>
@@ -140,17 +153,29 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
 
             modelBuilder.Entity("ContactGroup", b =>
                 {
-                    b.Property<int>("ContactId")
+                    b.Property<int>("ContactsId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int>("GroupsId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ContactId", "GroupId");
+                    b.HasKey("ContactsId", "GroupsId");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("GroupsId");
 
-                    b.ToTable("ContactGroup");
+                    b.ToTable("ContactGroup", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ContactsId = 1,
+                            GroupsId = 1
+                        },
+                        new
+                        {
+                            ContactsId = 3,
+                            GroupsId = 1
+                        });
                 });
 
             modelBuilder.Entity("AgendaApiLucianoSvaikaukas.Entities.Contact", b =>
@@ -164,17 +189,28 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("AgendaApiLucianoSvaikaukas.Entities.Group", b =>
+                {
+                    b.HasOne("AgendaApiLucianoSvaikaukas.Entities.User", "User")
+                        .WithMany("Groups")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ContactGroup", b =>
                 {
                     b.HasOne("AgendaApiLucianoSvaikaukas.Entities.Contact", null)
                         .WithMany()
-                        .HasForeignKey("ContactId")
+                        .HasForeignKey("ContactsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AgendaApiLucianoSvaikaukas.Entities.Group", null)
                         .WithMany()
-                        .HasForeignKey("GroupId")
+                        .HasForeignKey("GroupsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -182,6 +218,8 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
             modelBuilder.Entity("AgendaApiLucianoSvaikaukas.Entities.User", b =>
                 {
                     b.Navigation("Contacts");
+
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

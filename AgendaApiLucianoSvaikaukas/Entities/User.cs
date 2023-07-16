@@ -15,5 +15,6 @@ namespace AgendaApiLucianoSvaikaukas.Entities
         public string? LastName { get; set; }
         public string Password { get; set; }
         public ICollection<Contact>? Contacts { get; set; }
+        public ICollection<Group>? Groups { get; set; }
     }
 }

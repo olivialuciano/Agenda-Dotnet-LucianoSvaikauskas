@@ -16,24 +16,56 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             _context = context;
             _mapper = autoMapper;
         }
-        public List<Group> GetAll()
+        public List<Group> GetAllByUser(int userId)
+        {
+            return _context.Groups.Where(g => g.UserId == userId).ToList();
+        } //agregué prop userId en group
+
+        public List<Group> GetAll(GroupForCreationDTO dto, int userId)
         {
             return _context.Groups.ToList();
         }
 
-        public void Create(GroupForCreationDTO dto)
+        public void Create(GroupForCreationDTO dto, int userId)
         {
-            _context.Groups.Add(_mapper.Map<Group>(dto));
+            Group grupoACargar = new Group()
+            {
+                UserId = userId,
+                Name = dto.Name,
+                //Contacts = dto.Contacts,
+            };
+            _context.Groups.Add(grupoACargar);
+            _context.SaveChanges();
         }
 
-        public void Update(GroupForCreationDTO dto)
+        public void Update(GroupForCreationDTO dto, int userId, int groupId)
         {
-            _context.Groups.Update(_mapper.Map<Group>(dto));
+            var grupoAModificar = _context.Contacts.FirstOrDefault(x => x.UserId == userId && x.Id == groupId);
+
+            if (grupoAModificar != null)
+            {
+                grupoAModificar.UserId = userId;
+                grupoAModificar.Id = groupId;
+                grupoAModificar.Name = dto.Name;
+                //contactoAModificar.Contacts = dto.Contacts;
+
+                _context.SaveChanges();
+            }
         }
-        public void Delete(int id)
+        public void Delete(int id, int userId)
         {
-            _context.Groups.Remove(_context.Groups.Single(g => g.Id == id));
+            _context.Groups.Remove(_context.Groups.Single(c => c.Id == id && c.UserId == userId));
+            _context.SaveChanges();
+        }
+
+
+
+
+        /// /
+        public List<Group> GetAll(int userId)
+        {
+            throw new NotImplementedException();
         }
 
     }
-}
+} 

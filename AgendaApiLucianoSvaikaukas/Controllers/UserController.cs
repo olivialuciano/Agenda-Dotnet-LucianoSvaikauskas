@@ -42,19 +42,19 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult CreateUser(UserForCreationDTO dto)
-        {
-            try
-            {
-                _userRepository.Create(dto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-            return Created("Created", dto);
-        }
+        //[HttpPost]
+        //public IActionResult CreateUser(UserForCreationDTO dto)
+        //{
+        //    try
+        //    {
+        //        _userRepository.Create(dto);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex);
+        //    }
+        //    return Created("Created", dto);
+        //}
 
         [HttpPut("{id}")] //para editar telefono y nombre//editUserData/
         public IActionResult EditUserData(int id, UserForModificationDTO dto)

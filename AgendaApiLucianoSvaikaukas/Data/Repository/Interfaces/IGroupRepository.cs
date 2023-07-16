@@ -5,9 +5,10 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces
 {
     public interface IGroupRepository
     {
-        public List<Group> GetAll();
-        public void Create(GroupForCreationDTO dto);
-        public void Update(GroupForCreationDTO dto);
-        public void Delete(int id);
+        public List<Group> GetAll(int userId);
+        public List<Group> GetAllByUser(int userId);
+        public void Create(GroupForCreationDTO dto, int userId);
+        public void Update(GroupForCreationDTO dto, int userId, int groupId);
+        public void Delete(int id, int userId);
     }
 }

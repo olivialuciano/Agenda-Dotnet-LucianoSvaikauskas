@@ -40,14 +40,20 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             _context.SaveChanges();
 
         }
-        public void Update(ContactForCreationDTO dto, int userId, int contactId)
+        public Contact GetContacto(int id)
         {
-            var contactoAModificar = _context.Contacts.FirstOrDefault(x => x.UserId == userId && x.Id == contactId);
+            return _context.Contacts.Find(id);
+        }
+
+
+        public void Update(ContactForCreationDTO dto, int userId, int id)
+        {
+            var contactoAModificar = _context.Contacts.FirstOrDefault(x => x.UserId == userId && x.Id == id);
 
             if (contactoAModificar != null)
             {
                 contactoAModificar.UserId = userId;
-                contactoAModificar.Id = contactId;
+                contactoAModificar.Id = id;
                 contactoAModificar.CelularNumber = dto.CelularNumber;
                 contactoAModificar.Description = dto.Description;
                 contactoAModificar.Name = dto.Name;
@@ -57,6 +63,22 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
                 _context.SaveChanges();
             }
         }
+        //public void UpdateContact(Contact contacto)
+        //{
+        //    var contactoAModificar = _context.Contacts.FirstOrDefault(c => c.Id == contacto.Id);//(x => x.Id == contacto.Id);
+
+        //    if (contactoAModificar != null)
+        //    {
+        //        contactoAModificar.CelularNumber = contacto.CelularNumber;
+        //           contactoAModificar.Description = contacto.Description;
+        //              contactoAModificar.Name = contacto.Name;
+        //                contactoAModificar.TelephoneNumber = contacto.TelephoneNumber;
+
+        //        _context.SaveChanges();
+        //    }
+
+        //}
+
 
         public void Delete(int id, int userId)
         {

@@ -86,7 +86,12 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Groups");
 
@@ -94,7 +99,8 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Natacion"
+                            Name = "Natacion",
+                            UserId = 1
                         });
                 });
 
@@ -180,6 +186,17 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("AgendaApiLucianoSvaikaukas.Entities.Group", b =>
+                {
+                    b.HasOne("AgendaApiLucianoSvaikaukas.Entities.User", "User")
+                        .WithMany("Groups")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ContactGroup", b =>
                 {
                     b.HasOne("AgendaApiLucianoSvaikaukas.Entities.Contact", null)
@@ -198,6 +215,8 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
             modelBuilder.Entity("AgendaApiLucianoSvaikaukas.Entities.User", b =>
                 {
                     b.Navigation("Contacts");
+
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,24 +7,11 @@
 namespace AgendaApiLucianoSvaikaukas.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Groups",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Groups", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -65,24 +52,44 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ContactGroup",
+                name: "Groups",
                 columns: table => new
                 {
-                    ContactId = table.Column<int>(type: "INTEGER", nullable: false),
-                    GroupId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ContactGroup", x => new { x.ContactId, x.GroupId });
+                    table.PrimaryKey("PK_Groups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContactGroup_Contacts_ContactId",
-                        column: x => x.ContactId,
+                        name: "FK_Groups_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContactGroup",
+                columns: table => new
+                {
+                    ContactsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    GroupsId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContactGroup", x => new { x.ContactsId, x.GroupsId });
+                    table.ForeignKey(
+                        name: "FK_ContactGroup_Contacts_ContactsId",
+                        column: x => x.ContactsId,
                         principalTable: "Contacts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ContactGroup_Groups_GroupId",
-                        column: x => x.GroupId,
+                        name: "FK_ContactGroup_Groups_GroupsId",
+                        column: x => x.GroupsId,
                         principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -107,14 +114,33 @@ namespace AgendaApiLucianoSvaikaukas.Migrations
                     { 3, 11425789L, "Jefa", "Maria", 7656L, 2 }
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_ContactGroup_GroupId",
+            migrationBuilder.InsertData(
+                table: "Groups",
+                columns: new[] { "Id", "Name", "UserId" },
+                values: new object[] { 1, "Natacion", 1 });
+
+            migrationBuilder.InsertData(
                 table: "ContactGroup",
-                column: "GroupId");
+                columns: new[] { "ContactsId", "GroupsId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 3, 1 }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContactGroup_GroupsId",
+                table: "ContactGroup",
+                column: "GroupsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contacts_UserId",
                 table: "Contacts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Groups_UserId",
+                table: "Groups",
                 column: "UserId");
         }
 

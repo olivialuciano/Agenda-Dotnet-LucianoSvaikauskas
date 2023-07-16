@@ -20,23 +20,27 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
         [HttpGet]
         public IActionResult GetAll() //ActionResult -- tipo de devolución que usamos para los endpoints
         {
-            return Ok(_groupRepository.GetAll());
+            int userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value); //es un enum que tiene todos los tipos de claim
+            return Ok(_groupRepository.GetAllByUser(userId));
         }
 
         [HttpGet]
         [Route("{Id}")]
         public IActionResult GetOne(int Id)
         {
-            return Ok(_groupRepository.GetAll().Where(x => x.Id == Id));
+            var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var groups = _groupRepository.GetAll(userId).Where(x => x.Id == Id && x.UserId == userId).ToList();
+            return Ok(groups);
         }
 
 
-        [HttpPost] //nuevo contacto
+        [HttpPost] //nuevo grupo
         public IActionResult CreateGroup(GroupForCreationDTO createGroupDto)
         {
             try
             {
-                _groupRepository.Create(createGroupDto);
+                var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+                _groupRepository.Create(createGroupDto, userId);
             }
             catch (Exception ex)
             {
@@ -45,12 +49,14 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
             return Created("Created", createGroupDto);
         }
 
-        [HttpPut] //actualizar contacto
-        public IActionResult UpdateGroup(GroupForCreationDTO dto)
+        [HttpPut] //actualizar grupo
+        public IActionResult UpdateGroup(GroupForCreationDTO dto, int groupId)
         {
             try
             {
-                _groupRepository.Update(dto);
+                var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+
+                _groupRepository.Update(dto, userId, groupId);
             }
             catch (Exception ex)
             {
@@ -59,12 +65,14 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
             return NoContent();
         }
 
-        [HttpDelete] //eliminar contacto
+        [HttpDelete] //eliminar grupo
         public IActionResult DeleteGroupById(int id)
         {
             try
             {
-                _groupRepository.Delete(id);
+                var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+
+                _groupRepository.Delete(id, userId);
             }
             catch (Exception ex)
             {
