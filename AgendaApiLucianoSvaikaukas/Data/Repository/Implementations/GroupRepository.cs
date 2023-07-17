@@ -17,22 +17,16 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             _mapper = autoMapper;
         }
 
-
-
         public Group GetGroupById(int groupId)
         {
             return _context.Groups.FirstOrDefault(g => g.Id == groupId);
         }
-
-
 
         public void CreateGroup(Group group)
         {
             _context.Groups.Add(group);
             _context.SaveChanges();
         }
-
-
 
         public void Delete(int id, int userId)
         {
@@ -44,28 +38,11 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
         public List<Group> GetAllByUser(int userId)
         {
             return _context.Groups.Where(g => g.UserId == userId).ToList();
-        } //agregué prop userId en group
-
-        public List<Group> GetAll(GroupForCreationDTO dto, int userId)
-        {
-            return _context.Groups.ToList();
         }
 
-
-
-        //public void Update(GroupForCreationDTO dto, int userId, int groupId)
+        //public List<Group> GetAll(GroupForCreationDTO dto, int userId)
         //{
-        //    var grupoAModificar = _context.Contacts.FirstOrDefault(x => x.UserId == userId && x.Id == groupId);
-
-        //    if (grupoAModificar != null)
-        //    {
-        //        grupoAModificar.UserId = userId;
-        //        grupoAModificar.Id = groupId;
-        //        grupoAModificar.Name = dto.Name;
-        //        //contactoAModificar.Contacts = dto.Contacts;
-
-        //        _context.SaveChanges();
-        //    }
+        //    return _context.Groups.ToList();
         //}
 
         public void UpdateGroupName(int groupId, string newName)

@@ -44,10 +44,10 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             _context.SaveChanges();
 
         }
-        public Contact GetContacto(int id)
-        {
-            return _context.Contacts.Find(id);
-        }
+        //public Contact GetContacto(int id)
+        //{
+        //    return _context.Contacts.Find(id);
+        //}
 
 
         public void Update(ContactForCreationDTO dto, int userId, int id)
@@ -67,22 +67,6 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
                 _context.SaveChanges();
             }
         }
-        //public void UpdateContact(Contact contacto)
-        //{
-        //    var contactoAModificar = _context.Contacts.FirstOrDefault(c => c.Id == contacto.Id);//(x => x.Id == contacto.Id);
-
-        //    if (contactoAModificar != null)
-        //    {
-        //        contactoAModificar.CelularNumber = contacto.CelularNumber;
-        //           contactoAModificar.Description = contacto.Description;
-        //              contactoAModificar.Name = contacto.Name;
-        //                contactoAModificar.TelephoneNumber = contacto.TelephoneNumber;
-
-        //        _context.SaveChanges();
-        //    }
-
-        //}
-
 
         public void Delete(int id, int userId)
         {
@@ -90,19 +74,5 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             _context.SaveChanges();
         }
 
-        public List<Contact> GetAllByUser()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Contact> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        //public List<Contact> GetAllByUser()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

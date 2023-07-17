@@ -30,19 +30,6 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             return _context.Users.ToList();
         }
 
-        //public void Create(UserForCreationDTO dto)
-        //{
-        //    User usuarioACrear = new User()
-        //    {
-        //        Name = dto.Name,
-        //        Email = dto.Email,
-        //        LastName = dto.LastName,
-        //        Password = dto.Password,
-        //    };
-        //    _context.Users.Add(usuarioACrear);
-        //    _context.SaveChanges();
-
-        //}
         public User GetUser(int id)
         {
             return _context.Users.SingleOrDefault(u => u.Id == id);
@@ -71,30 +58,12 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             return _context.Users.ToList();
         }
 
-
-        public void Update(UserForCreationDTO dto)
-        {
-            _context.Users.Update(_mapper.Map<User>(dto));
-        }
-
-        public void Delete(int id)
-        {
-            _context.Users.Remove(_context.Users.Single(u => u.Id == id));
-            _context.SaveChanges();
-        }
-
-
-        public void Create(UserForCreationDTO dto)
-        {
-            throw new NotImplementedException();
-        }
-
-
         public void DeleteUser(User user)
         {
             _context.Users.Remove(user);
             _context.SaveChanges();
         }
+
 
     }
 }

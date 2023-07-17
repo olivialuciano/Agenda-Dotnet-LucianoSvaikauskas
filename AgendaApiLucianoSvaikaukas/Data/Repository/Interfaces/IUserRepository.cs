@@ -9,9 +9,6 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces
         public User ValidateUser(AuthenticationRequestBody authRequestBody);
         public User GetById(int userId);
         public List<User> GetAll();
-        public void Create(UserForCreationDTO dto);
-        public void Update(UserForCreationDTO dto);
-        public void Delete(int id);
         User GetUser(int id);
         public void UpdateUserData(User user);
         List<User> GetListUser();

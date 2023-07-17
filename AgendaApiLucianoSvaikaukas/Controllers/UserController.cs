@@ -42,29 +42,13 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
             }
         }
 
-        //[HttpPost]
-        //public IActionResult CreateUser(UserForCreationDTO dto)
-        //{
-        //    try
-        //    {
-        //        _userRepository.Create(dto);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex);
-        //    }
-        //    return Created("Created", dto);
-        //}
 
-        [HttpPut("{id}")] //para editar telefono y nombre//editUserData/
+        [HttpPut("{id}")] //para editar nombrem, apellido y email.
         public IActionResult EditUserData(int id, UserForModificationDTO dto)
         {
             try
             {
-                //int userId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
                 int userSesionId = Int32.Parse(HttpContext.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-
-                //var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
                 var user = new User()
                 {
                     Id = dto.Id,
@@ -138,30 +122,5 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
 
         }
 
-
-
-
-
-
-
-
-
-
-
-        //[HttpDelete]
-        //[Route("{Id}")]
-        //public IActionResult DeleteUser(int Id)
-        //{
-        //    try
-        //    {
-        //        _userRepository.Delete(Id);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex);
-        //    }
-        //    return Ok();
-        //}
     }
 }

@@ -48,7 +48,6 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
             // Llamar al método en el repositorio para crear el grupo
             _groupRepository.CreateGroup(group);
 
-            // Devolver una respuesta exitosa
             return Ok();
         }
 
@@ -81,15 +80,8 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
             group.Contacts.Add(contact);
             _context.SaveChanges();
 
-            // Devolver una respuesta exitosa
             return Ok();
         }
-
-
-
-
-
-
 
 
 
@@ -141,6 +133,7 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
         //}
 
         [HttpDelete] //eliminar grupo
+        [Route("{Id}")]
         public IActionResult DeleteGroupById(int id)
         {
             try

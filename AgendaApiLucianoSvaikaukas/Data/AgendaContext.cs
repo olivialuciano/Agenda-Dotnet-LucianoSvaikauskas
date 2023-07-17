@@ -62,7 +62,7 @@ namespace AgendaApiLucianoSvaikaukas.Data
             modelBuilder.Entity<User>()
                     .HasMany(x => x.Contacts)
                     .WithOne(x => x.User);
-
+            // Relación uno a muchos: Usuario - Grupo
             modelBuilder.Entity<User>()
               .HasMany(u => u.Groups)
               .WithOne(c => c.User);
@@ -77,25 +77,6 @@ namespace AgendaApiLucianoSvaikaukas.Data
                             new { GroupsId = 1, ContactsId = 1},
                             new { GroupsId= 1, ContactsId = 3},}));
 
-            //modelBuilder.Entity<Contact>()
-            //.HasOne(c => c.User)
-            //.WithMany(u => u.Contacts)
-            //.HasForeignKey(c => c.UserId)
-            //.OnDelete(DeleteBehavior.Cascade);
-
-            //modelBuilder.Entity<Group>()
-            //    .HasOne(g => g.User)
-            //    .WithMany(u => u.Groups)
-            //    .HasForeignKey(g => g.UserId)
-            //    .OnDelete(DeleteBehavior.Cascade);
-
-            //modelBuilder.Entity<Group>()
-            //    .HasMany(g => g.Contacts)
-            //    .WithMany(c => c.Groups)
-            //    .UsingEntity(j => j.ToTable("ContactGroup"))
-            //    .HasData(new[]{ //metemos a la tabla relacion
-            //                new { GroupsId = 1, ContactsId = 1},
-            //                new { GroupsId= 1, ContactsId = 3},});
 
             modelBuilder.Entity<User>().HasData(ka, lu);
             modelBuilder.Entity<Contact>().HasData(contacts);
