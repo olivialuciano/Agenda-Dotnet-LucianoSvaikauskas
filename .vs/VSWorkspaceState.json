@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\AgendaApiLucianoSvaikaukas",
+    "\\AgendaApiLucianoSvaikaukas\\Controllers"
   ],
+  "SelectedNode": "\\AgendaApiLucianoSvaikaukas\\Controllers\\GroupController.cs",
   "PreviewInSolutionExplorer": false
 }
