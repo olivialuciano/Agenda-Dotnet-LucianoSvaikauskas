@@ -97,7 +97,7 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
         public IActionResult GetOne(int Id)
         {
             var userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value);
-            var groups = _groupRepository.GetAll(userId).Where(x => x.Id == Id && x.UserId == userId).ToList();
+            var groups = _groupRepository.GetGroupById(Id);
             return Ok(groups);
         }
 
