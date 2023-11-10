@@ -53,34 +53,21 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
 
 
         [HttpPost("{groupId}/assign-contact")]
-        public IActionResult AssignContactToGroup(int groupId, [FromBody] ContactForAssignGroupDTO contactDTO)
+        public IActionResult AssignContactToGroup(ContactForAssignGroupDTO DTO)
         {
-            if (contactDTO == null)
+            try
             {
-                return BadRequest();
+                _groupRepository.AddContact(DTO);
+                return Created("Created", DTO);
             }
-
-            // Obtener el grupo por su ID
-            var group = _groupRepository.GetGroupById(groupId);
-
-            if (group == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return BadRequest(ex.Message);
             }
+            return Created("Created", DTO);
 
-            // Obtener el contacto por su ID
-            var contact = _contactRepository.GetContactById(contactDTO.Id);
 
-            if (contact == null)
-            {
-                return NotFound();
-            }
 
-            // Asignar el contacto al grupo
-            group.Contacts.Add(contact);
-            _context.SaveChanges();
-
-            return Ok();
         }
 
 

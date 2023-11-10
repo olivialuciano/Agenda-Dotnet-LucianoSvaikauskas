@@ -60,5 +60,17 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
         {
             throw new NotImplementedException();
         }
+
+
+        public void AddContact(ContactForAssignGroupDTO dto)
+        {
+            var contact = _context.Contacts
+                .Where(c => c.Id == dto.ContactId)
+                .Include(c => c.Groups)
+                .FirstOrDefault();
+            var group = _context.Groups.Find(dto.GroupId);
+            contact.Groups.Add(group);
+            _context.SaveChanges();
+        }
     }
 }

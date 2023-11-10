@@ -4,7 +4,8 @@ namespace AgendaApiLucianoSvaikaukas.Models
 {
     public class ContactForAssignGroupDTO
     {
-        public int Id { get; set; }
+        public int GroupId { get; set; }
+        public int ContactId { get; set; }
 
     }
 }

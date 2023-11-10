@@ -11,5 +11,7 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces
         public List<Group> GetAllByUser(int userId);
         public void Delete(int id, int userId);
         public void UpdateGroupName(int groupId, string newName);
+
+        public void AddContact(ContactForAssignGroupDTO dto);
     }
 }
