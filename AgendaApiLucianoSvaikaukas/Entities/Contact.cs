@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace AgendaApiLucianoSvaikaukas.Entities
 {
@@ -15,6 +16,8 @@ namespace AgendaApiLucianoSvaikaukas.Entities
         [ForeignKey("UserId")]
         public User User { get; set; }
         public int UserId { get; set; }
-        public ICollection<Group>? Groups { get; set; }
+        
+        [JsonIgnore]
+        public ICollection<Group> Groups { get; set; }
     }
 }

@@ -17,9 +17,43 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             _mapper = autoMapper;
         }
 
-        public Group GetGroupById(int groupId)
+        //public Group? GetGroupById(int groupId)
+        //{
+        //    1return _context.Groups.FirstOrDefault(g => g.Id == groupId);
+        //    var grupos = _context.Groups
+        //        .Include(c => c.Contacts)
+        //        .SingleOrDefault(u => u.Id == groupId);
+        //    2return grupos;
+        //}
+
+        // En tu Repositorio
+        public GroupWithContactsDTO GetGroupById(int groupId)
         {
-            return _context.Groups.FirstOrDefault(g => g.Id == groupId);
+            var group = _context.Groups
+                .Include(g => g.Contacts)
+                .FirstOrDefault(g => g.Id == groupId);
+
+            if (group == null)
+            {
+                return null; // Otra opción podría ser lanzar una excepción
+            }
+
+            // Mapear el objeto Group a un DTO para evitar problemas de referencia circular
+            var groupDTO = new GroupWithContactsDTO
+            {
+                Id = group.Id,
+                Name = group.Name,
+                Contacts = group.Contacts.Select(contact => new ContactDTO
+                {
+                    Id = contact.Id,
+                    Name = contact.Name,
+                    CelularNumber = contact.CelularNumber,
+                    Description = contact.Description,
+                    TelephoneNumber = contact.TelephoneNumber
+                }).ToList()
+            };
+
+            return groupDTO;
         }
 
         public void CreateGroup(Group group)

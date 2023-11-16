@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\AgendaApiLucianoSvaikaukas",
-    "\\AgendaApiLucianoSvaikaukas\\Controllers"
+    "\\AgendaApiLucianoSvaikaukas\\Controllers",
+    "\\AgendaApiLucianoSvaikaukas\\Data",
+    "\\AgendaApiLucianoSvaikaukas\\Data\\Repository",
+    "\\AgendaApiLucianoSvaikaukas\\Data\\Repository\\Implementations"
   ],
-  "SelectedNode": "\\AgendaApiLucianoSvaikaukas\\Controllers\\UserController.cs",
+  "SelectedNode": "\\AgendaApiLucianoSvaikaukas\\Controllers\\GroupController.cs",
   "PreviewInSolutionExplorer": false
 }

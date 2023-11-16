@@ -6,7 +6,7 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces
     public interface IGroupRepository
     {
         public void CreateGroup(Group group);
-        public Group GetGroupById(int groupId);
+        public GroupWithContactsDTO GetGroupById(int groupId);
         public List<Group> GetAll(int userId);
         public List<Group> GetAllByUser(int userId);
         public void Delete(int id, int userId);
