@@ -5,13 +5,21 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Interfaces
 {
     public interface IGroupRepository
     {
-        public void CreateGroup(Group group);
+        ////////// GET //////////
         public GroupWithContactsDTO GetGroupById(int groupId);
-        public List<Group> GetAll(int userId);
+
+        //public List<Group> GetAll(int userId); No necesitamos getall de groups xq es x user.
         public List<Group> GetAllByUser(int userId);
-        public void Delete(int id, int userId);
+
+        ////////// POST //////////
+        public void CreateGroup(Group group);
+        public void AddContact(ContactForAssignGroupDTO dto);
+
+        ////////// PUT //////////
         public void UpdateGroupName(int groupId, string newName);
 
-        public void AddContact(ContactForAssignGroupDTO dto);
+        ////////// DELETE //////////
+        public void Delete(int id, int userId);
+
     }
 }

@@ -9,25 +9,26 @@ using System.Text.Json;
 
 namespace AgendaApiLucianoSvaikaukas.Controllers
 {
-    [Route("api/[controller]")] //AUTOCOMPLETA SOLO CON CONTACT
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ContactController : ControllerBase //HEREDA DE:
+    public class ContactController : ControllerBase 
     {
-        //INYECCIÓN DE DEPENDENCIAS
         private readonly IContactRepository _contactRepository;
 
         public ContactController(IContactRepository contactRepository)
         {
             _contactRepository = contactRepository;
         }
-        //met en el repository getall user
-        //mandarle que user
+
+
+        ////////// GET //////////
+
         [HttpGet]
         public IActionResult GetAll() //ActionResult -- tipo de devolución que usamos para los endpoints
         {
             int userId = Int32.Parse(HttpContext.User.Claims.First(e => e.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value); //es un enum que tiene todos los tipos de claim
-            //return Ok(_contactRepository.GetAll());
+
             return Ok(_contactRepository.GetAllByUser(userId));
         }
 
@@ -42,7 +43,9 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
         }
 
 
-        [HttpPost] //nuevo contacto
+        ////////// POST //////////
+
+        [HttpPost]
         public IActionResult CreateContact(ContactForCreationDTO createContactDto)
         {
             try
@@ -58,7 +61,10 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
             return Created("Created", createContactDto);
         }
 
-        [HttpPut("{id}")] //actualizar contacto
+
+        ////////// PUT //////////
+
+        [HttpPut("{id}")]
         public IActionResult UpdateContact(ContactForCreationDTO dto, int id)
         {
             try
@@ -74,61 +80,11 @@ namespace AgendaApiLucianoSvaikaukas.Controllers
             return NoContent();
         }
 
-        //[HttpPut("{id}")] //editContact/
-        //public IActionResult EditContact(int id, ContactForCreationDTO dto, int userId)
-        //{
-        //    try
-        //    {
-        //        Contact contactoAModificar = new Contact()
-        //        {
-        //            UserId = userId,
-        //            CelularNumber = dto.CelularNumber,
-        //            Description = dto.Description,
-        //            Name = dto.Name,
-        //            TelephoneNumber = dto.TelephoneNumber,
-        //            //Groups = dto.Groups,
-        //        };
 
 
-        //        if (id != contactoAModificar.Id)
-        //        {
-        //            return NotFound();
-        //        }
+        ////////// DELETE //////////
 
-        //        var contactoItem = _contactRepository.GetContacto(id);
-
-        //        if (contactoItem == null)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        _contactRepository.UpdateContact(contactoAModificar);
-
-        //        var contactoModificado = _contactRepository.GetContacto(id);
-
-        //            Contact contactoModificadoDto = new Contact()
-        //            {
-        //                UserId = userId,
-        //                CelularNumber = dto.CelularNumber,
-        //                Description = dto.Description,
-        //                Name = dto.Name,
-        //                TelephoneNumber = dto.TelephoneNumber,
-        //                //Groups = dto.Groups,
-        //            };
-
-        //        return Ok(contactoModificadoDto);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-
-
-        //}
-
-
-        [HttpDelete] //eliminar contacto
+        [HttpDelete] 
         [Route("{Id}")]
         public IActionResult DeleteContactById(int id)
         {

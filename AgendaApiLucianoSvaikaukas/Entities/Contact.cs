@@ -12,7 +12,8 @@ namespace AgendaApiLucianoSvaikaukas.Entities
         public string Name { get; set; }
         public long CelularNumber { get; set; }
         public long? TelephoneNumber { get; set; }
-        public string Description { get; set; } = string.Empty; //inicializamos en vacío
+        public string Description { get; set; } = string.Empty; //inicializamos en vacío (otra forma)
+        
         [ForeignKey("UserId")]
         public User User { get; set; }
         public int UserId { get; set; }

@@ -2,11 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\AgendaApiLucianoSvaikaukas",
-    "\\AgendaApiLucianoSvaikaukas\\Controllers",
     "\\AgendaApiLucianoSvaikaukas\\Data",
     "\\AgendaApiLucianoSvaikaukas\\Data\\Repository",
-    "\\AgendaApiLucianoSvaikaukas\\Data\\Repository\\Implementations"
+    "\\AgendaApiLucianoSvaikaukas\\Data\\Repository\\Implementations",
+    "\\AgendaApiLucianoSvaikaukas\\Data\\Repository\\Interfaces",
+    "\\AgendaApiLucianoSvaikaukas\\Entities",
+    "\\AgendaApiLucianoSvaikaukas\\Models",
+    "\\AgendaApiLucianoSvaikaukas\\Profiles",
+    "\\AgendaApiLucianoSvaikaukas\\Properties"
   ],
-  "SelectedNode": "\\AgendaApiLucianoSvaikaukas\\Controllers\\GroupController.cs",
+  "SelectedNode": "\\AgendaApiLucianoSvaikaukas\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

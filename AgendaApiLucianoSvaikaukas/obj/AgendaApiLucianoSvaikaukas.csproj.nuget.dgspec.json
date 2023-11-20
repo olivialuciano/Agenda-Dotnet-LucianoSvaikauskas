@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Prog_web_back\\AgendaApiLucianoSvaikaukas\\AgendaApiLucianoSvaikaukas.csproj": {}
+    "C:\\Users\\PC\\Desktop\\Agenda-Dotnet-LucianoSvaikauskas\\AgendaApiLucianoSvaikaukas\\AgendaApiLucianoSvaikaukas.csproj": {}
   },
   "projects": {
-    "C:\\Prog_web_back\\AgendaApiLucianoSvaikaukas\\AgendaApiLucianoSvaikaukas.csproj": {
+    "C:\\Users\\PC\\Desktop\\Agenda-Dotnet-LucianoSvaikauskas\\AgendaApiLucianoSvaikaukas\\AgendaApiLucianoSvaikaukas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Prog_web_back\\AgendaApiLucianoSvaikaukas\\AgendaApiLucianoSvaikaukas.csproj",
+        "projectUniqueName": "C:\\Users\\PC\\Desktop\\Agenda-Dotnet-LucianoSvaikauskas\\AgendaApiLucianoSvaikaukas\\AgendaApiLucianoSvaikaukas.csproj",
         "projectName": "AgendaApiLucianoSvaikaukas",
-        "projectPath": "C:\\Prog_web_back\\AgendaApiLucianoSvaikaukas\\AgendaApiLucianoSvaikaukas.csproj",
-        "packagesPath": "C:\\Users\\EJS\\.nuget\\packages\\",
-        "outputPath": "C:\\Prog_web_back\\AgendaApiLucianoSvaikaukas\\obj\\",
+        "projectPath": "C:\\Users\\PC\\Desktop\\Agenda-Dotnet-LucianoSvaikauskas\\AgendaApiLucianoSvaikaukas\\AgendaApiLucianoSvaikaukas.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC\\Desktop\\Agenda-Dotnet-LucianoSvaikauskas\\AgendaApiLucianoSvaikaukas\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\EJS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -85,7 +85,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -97,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

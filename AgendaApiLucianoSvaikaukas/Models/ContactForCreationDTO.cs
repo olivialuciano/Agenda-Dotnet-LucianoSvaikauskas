@@ -12,7 +12,6 @@ namespace AgendaApiLucianoSvaikaukas.Models
         public long? TelephoneNumber { get; set; }
         public string Description { get; set; } = string.Empty;
         
-        //public ICollection<Group>? Groups { get; set; }
     }
 
 }

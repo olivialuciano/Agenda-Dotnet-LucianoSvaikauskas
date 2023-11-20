@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AgendaApiLucianoSvaikaukas.Data
 {
-    public class AgendaContext : DbContext //heredamos de dbcontext
-    {   //tablas (ef)
+    public class AgendaContext : DbContext
+    {  
         public DbSet<User> Users { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Group> Groups { get; set; }
+
         //Heredamos del constructor de DbContext
         public AgendaContext(DbContextOptions<AgendaContext> options) : base(options) { }
-        //users, contacts y groups harcodeados
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             User ka = new User()
@@ -55,13 +55,13 @@ namespace AgendaApiLucianoSvaikaukas.Data
                 Id=1,
                 Name="Natacion",
                 UserId=ka.Id,
-                //Contacts = contacts
             };
 
             // Relación uno a muchos: Usuario - Contacto
             modelBuilder.Entity<User>()
                     .HasMany(x => x.Contacts)
                     .WithOne(x => x.User);
+
             // Relación uno a muchos: Usuario - Grupo
             modelBuilder.Entity<User>()
               .HasMany(u => u.Groups)

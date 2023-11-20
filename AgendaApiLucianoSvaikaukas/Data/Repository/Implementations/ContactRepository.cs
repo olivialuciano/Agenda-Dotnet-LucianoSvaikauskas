@@ -17,6 +17,10 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             _mapper = autoMapper;
         }
 
+
+
+        ////////// GET //////////
+
         public List<Contact> GetAllByUser(int userId)
         {
             return _context.Contacts.Where(c => c.UserId == userId).ToList();
@@ -30,6 +34,10 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             return _context.Contacts.FirstOrDefault(c => c.Id == contactId);
         }
 
+
+
+        ////////// POST //////////
+        
         public void Create(ContactForCreationDTO dto, int userId)
         {
             Contact contactoACargar = new Contact(){
@@ -44,11 +52,10 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
             _context.SaveChanges();
 
         }
-        //public Contact GetContacto(int id)
-        //{
-        //    return _context.Contacts.Find(id);
-        //}
 
+
+
+        ////////// PUT //////////
 
         public void Update(ContactForCreationDTO dto, int userId, int id)
         {
@@ -67,6 +74,10 @@ namespace AgendaApiLucianoSvaikaukas.Data.Repository.Implementations
                 _context.SaveChanges();
             }
         }
+
+
+
+        ////////// DELETE //////////
 
         public void Delete(int id, int userId)
         {
