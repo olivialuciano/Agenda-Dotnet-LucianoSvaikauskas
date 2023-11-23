@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\AgendaApiLucianoSvaikaukas.props" />
-</Project>
